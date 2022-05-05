@@ -1,0 +1,115 @@
+Find the Duplicate Number: LEETCODE_287
+class Solution {
+public:
+    // Using XOR 
+int findDuplicate(vector<int> &nums) {
+    int n = nums.size();
+int ans = 0;
+        sort(nums.begin(),nums.end());
+        for(int i=0;i<nums.size();i++){
+                if(nums[i]==nums[i+1]){
+                        return nums[i];
+                }else{
+                        ans = ans ^ i ^ nums[i];
+                }
+            }
+        return ans; 
+}
+};
+
+SORT COLORS: LEETCODE_75
+class Solution {
+public:
+       
+    void sortColors(vector<int>& nums) {
+        int low=0,mid=0,high=nums.size()-1;
+        while( mid <= high)
+        {
+            if(nums[mid]==0)
+            {
+                swap(nums[low],nums[mid]);
+                    low++;
+                    mid++;
+            }
+            
+            else if(nums[mid]==1)
+            {
+                mid++;
+            }
+            else if(nums[mid]==2)
+            {
+               swap(nums[mid],nums[high]);
+                    high--; 
+            }
+             
+        }
+    }
+};
+Set Matrix Zeroes: LEETCODE 73 
+class Solution {
+public:
+   void setZeroes(vector<vector<int>>& matrix) {
+        int col0 = 1, rows = matrix.size(), cols = matrix[0].size(); 
+         for (int i = 0; i < rows; i++){
+             if (matrix[i][0] == 0) col0 = 0; 
+          for (int j = 1; j < cols; j++)
+             if (matrix[i][j] == 0)
+              matrix[i][0] = matrix[0][j] = 0;
+          }
+                  
+                                                
+
+           for (int i= rows-1; i >= 0; i--) { 
+         for (int j = cols - 1; j >= 1; j--)
+         if (matrix[i][0]== 0 || matrix[0][j] == 0) 
+             matrix[i][j] = 0;
+          if (col0 == 0) matrix[i][0] = 0;
+            }
+    }
+};
+
+best time to buy or sell :LEETCODE_121
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+	
+        int maxPro=0;
+        int minp=INT_MAX;
+		
+        for(int i=0;i<prices.size();i++){
+            minp=min(minp,prices[i]);
+            maxPro=max(maxPro,prices[i]-minp);
+        }
+		
+        return maxPro;
+    }
+};
+
+
+Rotate Image: LEETcode_48
+void rotate(vector<vector<int>>& matrix) {
+        int n=matrix[0].size();
+        for(int i=0;i<n;i++){
+            for(int j=i;j<n;j++){
+                swap(matrix[i][j],matrix[j][i]);
+            }
+        }
+        for(int i=0;i<n;i++){
+            reverse(matrix[i].begin(),matrix[i].end());
+        }
+    }
+
+Container With Most Water: LEETCODE_11
+    class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int l=0,r=height.size()-1;
+        int lh,rh,max_w=0;
+        while(l<r){                                   
+            lh = height[l];  rh = height[r];          
+            max_w = max(max_w,(min(lh,rh))*(r-l));    
+            (lh<rh)?l++:r--;     
+        }
+        return max_w;
+    }
+};
