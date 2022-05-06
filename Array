@@ -113,3 +113,168 @@ public:
         return max_w;
     }
 };
+
+ MAJORITY ELEMENT: leetcode_169
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        int count=0;
+        int ans=0;
+        for(int i=0;i<nums.size();i++){
+            if(count==0){
+                ans = nums[i];
+            }
+            if(ans==nums[i]){
+                count++;
+            }
+            else{
+                count--;
+            }
+        }
+        return ans;
+    }
+};
+
+Two Sum:Leetcode_01
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+      unordered_map<int,int>mp;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(mp.find(target-nums[i])!=mp.end())
+                return {mp[target-nums[i]],i};
+            else
+                mp[nums[i]]=i;
+        }
+        return {};
+    }
+};    
+    Valid Prenthesis
+class Solution {
+public:
+    bool isValid(string s) {
+       stack<int>help;
+        int n =s.length();
+        for(int i=0; i<n;i++){
+            if(help.empty()and (s[i]==')' or s[i]=='}' or s[i]==']')){
+                return false;
+            }
+            else if(s[i] == '(' or s[i]=='{' or s[i] =='['){
+                help.push(s[i]);
+            }
+            else if((help.top() == '(' and s[i] == ')') or (help.top() == '{' and s[i] =='}') or (help.top() == '[' and s[i]== ']')){
+                help.pop();
+            }
+            else return false;
+        }
+        if(!help.empty()){
+            return false;
+        }
+    return true;
+    }
+};
+ 
+
+3 sum :LEETCODE 15
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        int n=nums.size();
+        sort(nums.begin(),nums.end());
+        vector<vector<int>>res;
+        
+        for(int i=0;i<n-2;i++){
+            if(i==0||(i>0&&nums[i]!=nums[i-1])){// fixed a on one place
+                int low=i+1; // then do binary search for  finding b+c
+                int high = n-1;
+                int sum = 0-nums[i]; //sum=0-a
+                while(low<high){
+                    if(nums[low]+nums[high]==sum){ //b+c=-a
+                        vector<int>temp;
+                        temp.push_back(nums[i]);
+                        temp.push_back(nums[low]);
+                        temp.push_back(nums[high]);
+                        res.push_back(temp);
+                        while(low<high&&nums[low]==nums[low+1]){ // for duplicacy in left side
+                            low++;
+                        }  
+                         while(low<high&&nums[high]==nums[high-1]){ // for duplicacy in right side
+                            high--;
+                        }  
+                        low++;
+                        high--;
+                    }
+                    else if(nums[low]+nums[high]<sum){
+                        low++;
+                    }
+                    else{
+                        high--;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+};
+
+REmove Duplicates: leetcode:26
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        int i=1, k=1;
+        while(k<nums.size()){
+            if(nums[k]!=nums[k-1])
+                nums[i++]=nums[k];
+            
+            k++;
+        }
+        
+        return i;
+    }
+};
+
+MOVE ZEROES:Leetcode 283
+class Solution {
+public:
+    void moveZeroes(vector<int>& arr) {
+        int i = 0;
+        int n = arr.size();
+        for(int j = 0 ; j < n ; j++){
+            if(arr[j] != 0){
+                swap(arr[i],arr[j]);
+                i++;
+            }
+        }
+    }
+};
+
+Subarray sum divisible by k:Leetcode 974
+class Solution {
+public:
+     int subarraysDivByK(vector<int>& nums, int k) {
+         
+         unordered_map<int,int> m;
+         int sum = 0;
+         int rem = 0;
+         m[rem]++;
+         
+         int c = 0;
+         for(int i=0;i<nums.size();i++){
+             sum += nums[i];
+             if(sum < 0){
+                 sum = -(abs(sum)%k);
+             }
+             rem = (sum+k)%k;
+             
+             if(m[rem]){
+                 cout<<rem<<" ";
+                 c += m[rem];
+             }else if(rem%k == 0){
+                 c++;
+             }
+             m[rem]++;
+         }
+         return c;
+    }
+};
