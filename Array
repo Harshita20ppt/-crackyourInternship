@@ -278,3 +278,192 @@ public:
          return c;
     }
 };
+ 
+                                                                                 DAY 3
+
+4 SUM
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        int n=nums.size();
+        vector<vector<int>> ans;
+        sort(nums.begin(),nums.end());
+        for(int i=0;i<n;i++){
+            if(i>0 && nums[i]==nums[i-1])
+                continue;
+            for(int j=i+1;j<n;j++){
+                if(j!=(i+1) && nums[j]==nums[j-1])
+                    continue;
+                int rem=target-(nums[i]+nums[j]);
+                int p1=j+1;
+                int p2=n-1;
+                while(p1<p2){
+                    int curr=nums[p1]+nums[p2];
+                    if(curr<rem)
+                        p1++;
+                    else if(curr>rem)
+                        p2--;
+                    else{
+                        ans.push_back({nums[i],nums[j],nums[p1],nums[p2]});
+                        if(nums[p1]==nums[p2])
+                            break;
+                            int x=nums[p1];
+                            int y=nums[p2];
+                            while(x==nums[p1])
+                                p1++;
+                            while(y==nums[p2])
+                                p2--;
+                        
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+};
+
+Maximum Points You Can Obtain from Cards
+
+class Solution {
+public:
+    int maxScore(vector<int>& cardPoints, int k) {
+        int tmp = 0, ans = 0, n = cardPoints.size();
+        for(int i = 0; i < k; i++){tmp += cardPoints[i];}
+        ans = tmp;
+        for(int i = 0; i < k; i++){ans = max(ans, tmp += cardPoints[n - i - 1] - cardPoints[k - i - 1]);}
+        return ans;
+    }
+};
+
+Subarray Sum Equals K
+
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        unordered_map<int , int> mp;
+        
+        mp[0] = 1;
+        
+        int count = 0;int sum = 0;
+        for(int i = 0;i<nums.size();i++){
+            sum += nums[i];
+            
+            if(mp.find(sum - k)!=mp.end()){
+                count += mp[sum - k];
+            }
+            
+            mp[sum]++;
+        }
+        return count ;
+    }
+};
+
+SPIRAL MATRIX
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        
+        vector <int> res;
+        
+        int row = matrix.size();
+        int col = matrix[0].size();
+        
+        int count = 0;
+        int total = row*col;
+        
+        //index intalizartion
+        int start_row = 0;
+        int start_col = 0;
+        int end_row = row - 1;
+        int end_col = col - 1;
+        while(count<total)
+        {
+            //print starting r0w
+            for(int i = start_col;count<total && i<=end_col;i++)
+            {
+                res.push_back(matrix[start_row][i]);
+                count++;
+            }
+            start_row++;
+            
+            //print end col;
+            
+            for(int i = start_row;count<total && i<=end_row;i++)
+            {
+                res.push_back(matrix[i][end_col]);
+                count++;
+            }
+            end_col--;
+            
+            //print end row
+            
+            for(int i = end_col;count<total && i>=start_col;i--)
+            {
+                res.push_back(matrix[end_row][i]);
+                count++;
+            }
+            end_row--;
+            
+            //print start col in bottom up direction
+            
+            for(int i = end_row;count<total && i>=start_row;i--)
+            {
+                res.push_back(matrix[i][start_col]);
+                count++;
+            }
+            start_col++;
+        }
+        
+        
+        
+        return res;
+        
+        
+    }
+};
+
+WORD SEARCH
+class Solution {
+public:
+    bool look(vector<vector<char>> &board, string word,int i,int j,int l){
+        if(l==word.size())  return true;   
+       
+        if(i<0 || i>=board.size() || j<0 || j>=board[0].size() || board[i][j]!=word[l])  return false;  
+        board[i][j]='0';                                  
+        if(look(board,word,i-1,j,l+1)) return true;       
+        if(look(board,word,i,j-1,l+1)) return true;       
+        if(look(board,word,i,j+1,l+1)) return true;       
+        if(look(board,word,i+1,j,l+1)) return true;      
+ board[i][j]=word[l];                              
+        return false;
+    }
+    bool exist(vector<vector<char>>& board, string word) {
+        for(int i=0;i<board.size();i++){                             
+            for(int j=0;j<board[0].size();j++){
+                if(board[i][j]==word[0] && look(board,word,i,j,0))                  
+                    return true;
+            }
+        }
+        return false;
+    }
+};
+
+JUMP GAME
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        int n = nums.size();
+        vector<int>dp(n,false);
+        dp[n-1] = true;
+        for(int i=n-2;i>=0;i--){
+            for(int j=1;j<=nums[i] && j+i<n;j++){
+                if(dp[j+i]){
+                    dp[i]=true;
+                    break;
+                }
+            }
+        }
+        return dp[0];
+        
+    }
+};
