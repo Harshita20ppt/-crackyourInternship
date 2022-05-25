@@ -467,3 +467,126 @@ public:
         
     }
 };
+
+
+     EXCEL sheets 168_LETCODE                             DAY_4
+class Solution {
+public:
+    string rec(int n)
+    {
+        if(n==0 or n==26)
+            return "Z";
+        else if(n>0 and n<26)
+        {
+            string s="";
+            char a='A' + n -1;
+            s+=a;
+            return s;
+        }
+        else if(n>26)
+        {
+            int r=n%26;
+            int q=n/26;
+            if(r==0)
+                q--;
+            return rec(q) + rec(r);
+        }
+        return "";
+    }
+    string convertToTitle(int columnNumber) 
+    {
+        int n=columnNumber;
+        return rec(n);
+    }
+};
+
+  HAPPY NO. Leetcode-202
+class Solution {
+public:
+  bool isHappy(int n) {
+        if(n<10) n=n*n;
+        while(n>9){
+            long long sum=0;
+            while(n){
+                sum = pow(n%10,2)+ sum;
+                n/=10;
+            }
+            n=sum;
+        }
+        if(n==1 or n==7) return true;
+        return false;
+       
+    }
+};
+Palindrome Leetcode-9
+class Solution {
+public:
+    bool isPalindrome(int x) 
+    {   
+        if(x<0)
+           { return false;}
+        int temp=x;
+        long int rev=0;
+        while(temp!=0)
+        { 
+          int rem=temp%10;
+            rev=rev*10+rem;
+            temp=temp/10;
+            
+        }
+        
+     
+        if(rev==x){return true;}
+        else{return false;}
+    }
+};
+
+Missing No. 268
+
+class Solution {
+public:
+   int missingNumber(vector<int>& nums)
+{
+	const int numSize = nums.size();
+	sort(nums.begin(), nums.end());
+	for (int i = 0; i < numSize; ++i)
+		if (nums[i] != i)
+			return i;
+	return numSize;
+}
+};
+
+POWER OF two:Leetcode-231
+class Solution {
+public:
+    bool isPowerOfTwo(int n) {
+        if(n<=0) return false;
+        return ((n&(n-1))==0);
+    }
+
+};
+	Leetcode-149 missing point on a line	
+class Solution {
+public:
+    int maxPoints(vector<vector<int>>& points) {
+        if(points.size() == 1) return 1;
+        int ans = 0;
+        for(auto &it : points){
+            unordered_map<double,int> mp;
+            double x1 = it[0], y1 = it[1];
+            for(auto &i : points){
+                if(i == it) continue;
+                double x2 = i[0], y2 = i[1];
+                double curr_slope;
+                if(x2-x1 == 0){
+                    curr_slope = 1e9; // if line is vertical 
+                }else{
+                    curr_slope = (y2-y1)/(x2-x1);   
+                }
+                mp[curr_slope]++;
+                ans = max(ans,mp[curr_slope]);
+            }
+        }
+        return ans+1; // ans + 1 is becuase the first point of line was not counted before
+    }
+};		  
